@@ -1,0 +1,35 @@
+import numpy as np
+from sklearn.model_selection import train_test_split
+from database import DB_CREDITS, DB_USERS
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix
+def machine(x,y):
+  X = []
+  for i in x:
+    X.append(x[i])
+  X_train, x_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
+  model = LogisticRegression()
+  model.fit(X_train, y_train)
+  y_pred = model.predict(x_test)
+  return y_pred
+mass = []
+person = {}
+for i in DB_CREDITS:
+  data = []
+  for j in DB_CREDITS[i]:
+    if j == 'status':
+      if DB_CREDITS[i][j]=='Îäîáðåí':
+        mass.append(1)
+      elif DB_CREDITS[i][j]=='Îòêàçàí':
+        mass.append(0)
+    elif j =='total_credits' or j =='delayed_payments' or j =='active_credits':
+      data.append(DB_CREDITS[i][j])
+  person[int(i)] = data
+answer = machine(person,mass)
+ans = []
+for i in answer:
+  if i == 1:
+    ans.append("Одобрен")
+  else:
+    ans.append("Отказан")
+print(ans)
