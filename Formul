@@ -25,4 +25,11 @@ for i in DB_CREDITS:
     elif j =='total_credits' or j =='delayed_payments' or j =='active_credits':
       data.append(DB_CREDITS[i][j])
   person[int(i)] = data
-machine(person,mass)
+answer = machine(person,mass)
+ans = []
+for i in answer:
+  if i == 1:
+    ans.append("Одобрен")
+  else:
+    ans.append("Отказан")
+print(ans)
